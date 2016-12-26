@@ -1,0 +1,140 @@
+
+
+
+
+// proxy url
+var _proxy = "http://searchbox.mapbar.com:80/publish/common/proxy.jsp";
+
+function getUrlText(url) {
+	var text = "";
+	var myAjax = new Ajax.Request( url, { 
+		method: 'get', parameters: "", encoding: "UTF-8", asynchronous: false,
+	  onComplete: function (originalRequest) {
+	    if (originalRequest.responseText) {
+	  		text = originalRequest.responseText.replace(/\n/gi, '');
+	  	}
+		},
+		onException: function (req, ex) {
+	  	//alert(ex.message);
+		}
+  });
+  return text;
+}
+function getUrlXml(url) {
+	var text = "";
+	var myAjax = new Ajax.Request( url, { 
+		method: 'get', parameters: "", encoding: "UTF-8", asynchronous: false,
+	  onComplete: function (originalRequest) {
+	    if (originalRequest.responseXML) {
+	  		text = originalRequest.responseXML;
+	  	}
+		},
+		onException: function (req, ex) {
+	  		alert(ex.message);
+		}
+  });
+  return text;
+}
+
+function getCityByName(cityName, proxy){
+	if(cityName == "-1" || 
+			cityName.indexOf("省") >=0 ||
+			cityName.indexOf("直辖市") >=0 ||
+			cityName.indexOf("自治区") >=0 ||
+			cityName == "特别行政区"){
+		alert("请选择省会中的城市!");
+		return  {cityName:cityName, cityCode:"", center:""};
+	} else {
+		if(cityData){
+			for(var i=0;i<cityData.province.length;i++){
+				for(var j=0;j<cityData.province[i].city.length;j++){
+					if(cityData.province[i].city[j].cityName==cityName){
+						return {cityName:cityName, cityCode:cityData.province[i].city[j].citycode,center:cityData.province[i].city[j].citylatlon};
+					} 
+				}
+			}
+		}
+		return {cityName:cityName, cityCode:"", center:""};
+	}	
+}
+
+function getCityOptionByName(select, cityName){
+	var ln = select.options.length;
+	if(cityName == "-1" || 
+			cityName.indexOf("省") >=0 ||
+			cityName.indexOf("直辖市") >=0 ||
+			cityName.indexOf("自治区") >=0 ||
+			cityName.indexOf("特别行政区") ==0){
+	}else{
+		for(var i=0;i<ln;i++){
+		  var option = select.options[i];
+		  if (option.value==cityName) {
+			option.selected = true;
+			return option.value;
+		  }
+		}
+	}
+}	
+
+function getPoiByKeyword(cityName, keyword, proxy){
+	if (!cityName || !keyword ) return ""; 
+	var pbkname="";
+	var pbklatlon="";
+	try {
+		
+		var xml =getUrlXml(((proxy)?proxy:_proxy)+"?api=getCityByName&encode=UTF-8&city="+encodeURIComponent(cityName)+"&keyword="+encodeURIComponent(keyword));
+		pbkname=keyword;
+		pbklatlon=getNodeValue(xml, "strlatlon");
+		if(pbklatlon==null || pbklatlon=="" || pbklatlon=="UFBVA"){
+			xml = getUrlXml(((proxy)?proxy:_proxy)+"?api=keyword&encode=UTF-8&city="+encodeURIComponent(cityName)+"&keyword="+encodeURIComponent(keyword));
+			pbkname=getNodeValue(xml, "name");
+			pbklatlon=getNodeValue(xml, "strlatlon");
+			
+		}
+	} catch (e) {
+		pbkname="";
+		pbklatlon="";
+	}
+	return {name:pbkname, latLon:pbklatlon};
+}
+
+function getPoiByNids(cid, cityName, nid, width, height){
+  if (!nid || !cityName ) return "";
+  var result = {cityName:cityName, pois:[], center:"", scale:8};
+  try {
+	  var xml = getUrlXml("http://searchbox.mapbar.com:80/publish/service/poiList.jsp?CID="+cid+"&cityName="+encodeURIComponent(cityName)+"&nid="+nid+"&width="+width+"&height="+height);
+	  result["center"] = getNodeValue(xml, "center");
+	  result["scale"] = getNodeValue(xml, "scale");
+	  var items = xml.getElementsByTagName("item");
+	  for(var i=0; i<items.length;i++) {
+	    var item = items[i];
+	  	result["pois"].push({nid:nid, cityName:cityName, 
+	  	  name:getNodeValue(item, "name"), 
+	  	  address:getNodeValue(item, "address"), 
+	  	  phone:getNodeValue(item, "phone"), 
+	  	  latLon:getNodeValue(item, "strlatlon"), 
+	  	  detail:getNodeValue(item, "briefDescription"),
+	  	  cText1:getNodeValue(item, "cText1"),
+	  	  cText2:getNodeValue(item, "cText2"),
+	  	  cText3:getNodeValue(item, "cText3"),
+	  	  cText4:getNodeValue(item, "cText4"),
+	  	  cText5:getNodeValue(item, "cText5"),
+	  	  cText6:getNodeValue(item, "cText6"),
+	  	  cText7:getNodeValue(item, "cText7"),
+	  	  cText8:getNodeValue(item, "cText8"),
+	  	  dNumber1:getNodeValue(item, "dNumber1"),
+	  	  dNumber2:getNodeValue(item, "dNumber2"),
+	  	  dNumber3:getNodeValue(item, "dNumber3"),
+	  	  dNumber4:getNodeValue(item, "dNumber4")});
+  	}
+	} catch (e) {
+	  alert(e);
+  }	
+  return result;
+}
+
+function getNodeValue(item, node) {
+  var text = "";
+  try { text = item.getElementsByTagName(node)[0].firstChild.nodeValue; } catch(e) {};
+  return text;
+}

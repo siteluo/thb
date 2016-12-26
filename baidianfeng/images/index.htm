@@ -1,0 +1,481 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<title></title>
+<style>
+/*初始值
+-------------------------------*/
+body{margin:0;padding:0;background:#fff;font:normal normal normal 12px "Lucida Grande", Verdana, Lucida, Arial, Helvetica, "宋体",sans-serif;}
+div,form,p,img,ul,ol,li,dl{border:0;list-style:none;margin:0;padding:0;text-align:left;}
+li{list-style-position:outside;}
+a:link,a:visited,a:active{color:#00c;text-decoration:underline;}
+a:hover{text-decoration:none;color:red;}
+h1,h2,h3,h4,h5,h6{font-size:14px;margin:0;padding:0;}
+input,select,textarea{font-size:12px;font-family:Arial;line-height:15px;}
+
+/*main
+-------------------------------*/
+.smBox{position:relative;border:1px solid #888;}
+.smBox .boBox {border-top:1px solid #888888;position:relative;}
+.leftTag form {display:none;padding:2px 10px 1px;_padding:1px 10px 0;}
+.leftTag form table{position:relative;}
+.leftTag form input{height:17px;border:1px solid #888;color:#888;}
+.leftTag form .inpBut{position:relative;left:-3px;width:47px;height:21px;background:url(http://r.mapbar.com/searchbox/publish/template/template1010/images/bg_butInp.gif) no-repeat;border:1px solid #888;font-weight:bold;color:#000;}
+.TAGUL{height:21px;background:url(http://r.mapbar.com/searchbox/publish/template/template1010/images/bg_tagbut.gif) repeat-x;}
+.TAGUL td{width:25%;height:21px;text-align:center;line-height:21px;background:url(http://r.mapbar.com/searchbox/publish/template/template1010/images/bg_li.gif) repeat-y 100% 0;border-bottom:1px solid #888;cursor:pointer;}
+.TAGUL td.onA{background-color:#fff;border-color:#fff;}
+.TAGUL td a{display:block;height:100%;color:#000;text-decoration:none;}
+.TAGUL td a:hover{color:#00f;text-decoration:underline;}
+ul.RTxt{overflow:hidden;height:52px;position:absolute;right:0;border-left:1px solid #888;}
+ul.RTxt li{float:left;width:130px;line-height:2em;color:#8080CE; background:url(http://r.mapbar.com/searchbox/publish/template/template1010/images/bg_lilist.gif) no-repeat 7px 55%;padding-left:16px;}
+ul.RTxt a{color:#8080CE;}
+
+#searchMaxMap{position:absolute;z-index:9;width:100%;height:20px;}
+.vAllmap{position:absolute;top:-1px;right:-1px;width:111px;height:24px;_height:21px;background:url(http://r.mapbar.com/searchbox/publish/template/template1010/images/bg_ckbg.png) no-repeat;}
+.vAllmap li{float:left;position:relative;margin-left:2px;_margin-left:1px;}
+.vAllmap li a{float:left;width:53px;height:20px;text-decoration:none!important;color:#000!important;background:url(http://r.mapbar.com/searchbox/publish/template/template1010/images/bg_ckbgA.gif) repeat-x;border-right:1px solid #aaa;}
+.vAllmap li a:hover{color:red!important;background-position:1px -17px;}
+.vAllmap a b{display:block;height:13px;margin-top:4px;background:url(http://r.mapbar.com/searchbox/publish/template/template1010/images/bg_tools.gif) no-repeat;font-weight:normal;text-indent:23px;line-height:13px;*line-height:14px;cursor:pointer;}
+.vAllmap .toolC{background-position:4px -39px;}
+.vAllmap .toolD{background-position:4px -53px;}
+.toolB{background-position:0 -20px!important;}
+.vAllmap li ul{position:absolute;top:20px;left:-2px;width:81px;padding:2px 1px;background:#E2F0FA;border:1px solid #00479D;}
+.vAllmap li ul li{float:none;height:19px;margin:0;}
+.vAllmap li ul sup{color:red;}
+.vAllmap li ul a{display:block;width:100%!important;line-height:1.6em;border-bottom:1px solid #B5C0C8;border-right:0;background:none;text-indent:2px}
+.vAllmap li ul a:hover{background:#3572B4;color:#fff!important;}
+#mapbar-borderbtm,#mapbar-borderlft,#mapbar-bordertop,#mapbar-borderrgt{border:0!important;}
+</style>
+<script type="text/javascript" src="index_data/mapbar31.js"></script><style type="text/css"> .ptlabel {    text-decoration: none;  cursor: pointer;  font-family: Arial, Helvetica, sans-serif;   font-size: 8pt; }  .tooltiptitle {  color: #CC5522;   text-decoration: none;  cursor: pointer;  font-family: Arial, Helvetica, sans-serif;   font-weight: bold;   font-size: 10pt;}  .tooltipcontent {   color: #000000;   text-decoration: none;  cursor: pointer;  font-family: Arial, Helvetica, sans-serif;   font-size: 8pt; }  .hotspotlabel {  position: absolute;  color: #000;   text-decoration: none;  cursor: pointer;  font-family: Arial, Helvetica, sans-serif;   font-size: 10pt;}  .editableimg {   position: absolute;  overflow: hidden;    cursor: pointer;  border: 1px solid #fff;    z-index: 1000;    opacity: 0.6;    font-size: 0px;   display: block; }  .buffering {  position: absolute;  height: 16px;  z-index: 24;   opacity: 0.6;    font-size: 12px;  font-weight: bold;   background-color: #fff;    color: #000;   border: 0px solid #000;    text-align: center;  padding-top: 0px;    display: block; }  .tiplabel {   position: absolute;  height: 12px;  z-index: 0; white-space: nowrap;   display: block;   background-color: #FFFFCC;    border: 1px solid #f00;    color: #f00;   font-size: 12px;  font-weight: bold; }  #ToolTip {    position: absolute;  opacity: 0.8;    width: 100px;  top: 0px;   left: 0px;  z-index: 24;   visibility: hidden;}  #loading {    position: absolute;  z-index: 24;   opacity: 0.6;    font-size: 13px;  font-weight: bold;   background-color: #fff;    color: #000;   border: 0px solid #000;    text-align: center;  padding-top: 4px;    display: block; }  #mbglabel {   position: absolute;  z-index: 0;    white-space: nowrap;    display: block;   visibility: visible;  }  #mfglabel {   position: absolute;  z-index: 0;    white-space: nowrap;    display: block;   visibility: visible;    background-color: #FFFFCC;  }  #stylelabel {    position: absolute;  z-index: 24;   opacity: 0.8;    font-size: 13px;  font-weight: bold;   background-color: #fff;    color: #000;   border: 1px solid #000;    text-align: center;  padding-top: 4px;    display: block; }  #mapbar-overview-viewport {  position: absolute;  width: 0px;    top: 0px;   left: 0px;  height: 0px;   z-index: 10;   font-size: 0px;   opacity: 0.5;    background-color: white;    border: 2px solid white;    visibility: visible;  }  #mapbar-overview-viewframe {    position: absolute;  width: 0px;    top: 0px;   left: 0px;  height: 0px;   z-index: 11;   font-size: 0px;   border: 2px solid #D50F1E;    visibility: visible;  }  #mapbar-overview-viewpad_ctrl {   position: absolute;  width: 0px;    top: 0px;   left: 0px;  height: 0px;   z-index: 12;   font-size: 0px;   border: 2px solid #D50F1E;    visibility: visible;  }  #mapbar-bordertop {    position: absolute;  z-index: 2;    font-size: 0px;   border-top: 1px solid #949694;   visibility: visible;  }  #mapbar-borderbtm {    position: absolute;  z-index: 2;    font-size: 0px;   border-bottom: 1px solid #949694;   visibility: visible;  }  #mapbar-borderlft {    position: absolute;  z-index: 2;    font-size: 0px;   border-left: 1px solid #949694;  visibility: visible;  }  #mapbar-borderrgt {    position: absolute;  z-index: 2;    font-size: 0px;   border-right: 1px solid #949694;    visibility: visible;  }  .contextmenuitem {  color: #0E347F;   text-decoration: none;  cursor: pointer;  font-family: Arial, Helvetica, sans-serif;   font-size: 9pt;   padding-right: 6px;   width: 100%; }  .contextmenutable {    text-decoration: none;  cursor: pointer;}  .mapcontextmenu {   position: absolute;  background-color: #FFFFFF;   padding: 1px;   border: 1px outset #cccccc;   top: 0px;   left: 0px;  z-index: 24;   visibility: hidden;}  .mapCirEdging .borT,   .mapCirEdging .borB {   height: 1px;   margin: 0 1px;    border-bottom: 1px solid #8F8F8F;   line-height: 1px;    font-size: 1px; }  .mapCirEdging .borB {  border: 0;  border-top: 1px solid #8F8F8F; }  .mapCirEdging .borT2, .mapCirEdging .borB2 {   height: 1px;   border: 1px solid #BCBCBC;    border-top: 0;    border-bottom: 0;    line-height: 1px;    font-size: 1px; }  .mapCirEdging .MPBox2 {   height: auto;  border: 1px solid #8F8F8F;    border-top: 0;    border-bottom: 0;    background: #fff;  }  .mapCirEdging .MPbox {    margin: 3px;   font-size: 12px;  text-align: left;  }  .snapshotTextBtn {    padding-top: 3px;   padding-bottom: 3px;   padding-left: 4px;   padding-right: 4px;   margin-left: 2px;   font-family: 宋体;   font-size: 13px;  text-align: center;    font-weight: normal;    letter-spacing: 1px;    background: #0E347F;    color: white;  }  .roadlineTip {    padding: 2px;   font-family: 宋体;   font-size: 13px;  color: #666666;  border: 1px solid #666666;    background: none repeat scroll 0 0 #FFFFFF;    white-space: nowrap;  }  .roadlineTip_distance {    color: black;  white-space: nowrap;  }  .pointBox{position:absolute;z-index:100}.pointBox .PMain{padding:0 10px;border: 2px solid rgb(14, 52, 127); background:#fff }.pointBox .pointer{overflow:hidden;width:15px;height:14px;margin:-4px 0 0;background:url(images/pointBg.png) no-repeat;_background:none}.pointBox .pointer img{display:none;_display:block;width:15px;height:14px;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=images/pointBg.png,sizingMethod=image,sizingMethod=scale)}.pointBox .BoxBg{position:absolute;z-index:-1;width:100%;margin:auto 0 0 8px;padding-top:5px;background:#666;filter:alpha(opacity=60);opacity:0.6}.rightThis .pointer{width:auto;margin:-4px 0 0;background-position:100% -16px!important;_background:none}.rightThis .pointer img{_position:absolute;_right:0;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=images/pointBgR.png,sizingMethod=image,sizingMethod=scale)}.rightThis .BoxBg{margin:auto 15px 0 0;left:-5px}</style></head><body style="cursor: default;" onload="oninit();"><img id="sendmapload" style="display: none; visibility: hidden;"><div id="myalert" style="position:absolute;z-index:100000;filter:alpha(opacity=85);opacity:0.85;display:none;background-color:white;padding:1px;"></div>
+
+<script type="text/javascript" src="index_data/prototype.js"></script>
+<script type="text/javascript" src="index_data/jquery-1.js"></script>
+<script type="text/javascript">jQuery.noConflict();</script>
+<script type="text/javascript" src="index_data/template.js"></script>
+<script type="text/javascript" src="index_data/common.htm"></script>
+<script type="text/javascript" src="index_data/infowindow2.js"></script>
+<script type="text/javascript" src="index_data/cityDataWithBus.js"></script>
+<script type="text/javascript" src="index_data/sendtool.js"></script>
+
+<script type="text/javascript">
+	
+	MOUSEWHEEL=false;//设置鼠标滚动改变地图比例
+	var maplet = null;
+	var poisize=0;//标点数量
+	var isToMapbar="0";//是否带点地图跳主站功能
+	var isopen=0; //点一次跳到主站后，以后点就不跳了
+	var markerpoi=0;//点气泡时不跳主站
+	var wwidth="258"; 
+	var wheight="230";
+	var showSearchDiv="1"; 
+	var searchStrlatlon="";//查询用标点经纬度
+	var poiname="";//查询用标点名称
+	var showmaxmap="t";
+	var searchCity=encodeURIComponent("太原市");//查询用城市名称
+	var sms="";//信息内容
+	var title="";//信息名称
+
+	var baseUrls="http://searchbox.mapbar.com:80/publish";
+	var proxy = location.href.substring(0,location.href.indexOf("?"));
+	if (proxy.indexOf("proxy")==-1) proxy = "http://searchbox.mapbar.com:80/publish/common/proxy.jsp";
+
+	function oninit() {
+		if(showSearchDiv=="1"){
+			if(wwidth<230){
+				wwidth=230;
+			}
+			if(wheight<230){
+				wheight=230;
+			}
+		}
+		
+		//iframer 宽高要减2才能显示全小地图
+		wwidth=wwidth-2;
+		wheight=wheight-2;
+		document.getElementById("mainBox").style.width=wwidth+"px";
+		document.getElementById("mainBox").style.height=wheight+"px";
+		if(showmaxmap!="t" ){
+			document.getElementById("searchMaxMap").style.display="none";
+		}
+		if(showSearchDiv=="1"){
+			document.getElementById("searchDiv").style.display="";
+			if(wwidth>597){
+				document.getElementById("rightTXT").style.display="";
+				document.getElementById("rightTXT").style.width="300px";
+				document.getElementById("leftSearch").style.marginRight="300px";
+				wheight=wheight-53;
+			}else if(wwidth>447){
+				document.getElementById("rightTXT").style.display="";
+				document.getElementById("rightTXT").style.width="150px";
+				document.getElementById("leftSearch").style.marginRight="150px";
+				wheight=wheight-53;
+			}else{
+				wheight=wheight-53;
+			}
+		}
+		document.getElementById("mapbar").style.width=wwidth+"px";
+		document.getElementById("mapbar").style.height=wheight+"px";	
+		maplet = new Maplet("mapbar");
+
+		var center = getCityByName("太原市")["center"];
+		if (!center || "" == center) center="北京市";
+		maplet.centerAndZoom(new MPoint(center), 10);
+		
+		 	  
+			maplet.addControl(new MStandardControl());
+			maplet.controlCanvas.showCtlPan(false);
+			maplet.controlCanvas.showCtlRuler(false);
+			maplet.controlCanvas.showZOButton(true);
+			maplet.controlCanvas.showZIButton(true);
+				
+		maplet.showScale(true);
+		maplet.showLogo(true);
+		
+		
+		maplet.showOverview(true,false); 
+		
+		if(wwidth<398){
+			maplet.showScale(false);
+		}
+		if(wwidth<698){
+			maplet.showNavLogo(false);
+		}
+		maplet.resize(wwidth,wheight);
+		maplet.setIwStdSize(215,160);
+		go2Poi("guo126312","太原市","MAPBQNCACIXRJBCIZIHWX");
+		if(isToMapbar=="0" ){
+			if(showmaxmap!="t"){
+				MEvent.addListener(maplet, "pan", mapBookmark);
+			}
+		}
+	}
+	function go2Poi(cid, cityName, nid) {
+		
+		var result = getPoiByNids(cid, cityName, nid, wwidth,wheight);
+  		clearMap();
+		if (result["center"] != "") {
+			maplet.setCenter(result["center"]);
+			var zoom="10";
+			if(zoom!="" && zoom>=0 && zoom<14){
+				maplet.setZoomLevel(parseInt(zoom));
+			}
+		}
+		if (result["pois"].length > 1) { 
+			maplet.setZoomLevel(parseInt(result["scale"]));
+		}
+		var poinum=0;
+		sms="";
+		title="";
+		for(var i=0; i<result["pois"].length; i++) {
+			poisize=result["pois"].length;
+			var poi = result["pois"][i];
+			
+			if (poi["latLon"] && poi["latLon"] != "") {
+				poinum++;
+				if(poinum==1){
+					searchStrlatlon=poi["latLon"];
+					poiname=poi["name"];
+					title=poiname+"-mapbar.com";
+				}
+				sms+=poi["name"]+":"+poi["address"]+" "+poi["phone"]+"。";
+				var info = new InfoWindow(poi);
+				info.setImage("standard");
+				info.setName("standard");
+				info.setCid("guo126312");
+				info.setUserTid("");
+				info.setTitle("standard");
+				info.setStyle("bubble");
+				info.setTemplate("standard");
+				info.setFunction("http://www.mapbar.com/");
+				var marker=info.getMMarker();
+				maplet.addOverlay(marker);
+				var firstglance='open';
+				var strstyle='bubble';
+				if('none'!=strstyle && firstglance=='open' && poinum=="1"){
+					markerpoi=1;
+					marker.openInfoWindow();
+				}
+				
+			} 
+					
+		}
+		//如果只有一个标点并查询是显示的，把标点名称值给查询框里
+		if(poinum==1 && showSearchDiv=="1"){
+			document.getElementById("busDestName").value=poiname;
+			document.getElementById("carDestName").value=poiname;
+			document.getElementById("nearKeyword").value=poiname;
+		}else if(poinum>1 && showSearchDiv=="1"){//如果多于一个标点，查询框里不给值 
+			searchStrlatlon="";
+			poiname="";
+			title="来自mapbar.com的地图信息";
+		}
+	 
+	}
+	function clearMap() {
+		maplet.clearOverlays();
+	}
+	//是否自动跳到主站
+	function mapBookmark() {
+		if(isopen==0 && markerpoi==0 ){
+			
+			var width=document.getElementById("mapbar").style.width;
+			if(width.indexOf("px")!=-1){
+				width=width.replace("px","");
+			}
+			var height=document.getElementById("mapbar").style.height;
+			if(height.indexOf("px")!=-1){
+				height=height.replace("px","");
+			}
+			isopen=1;
+			
+			if(width<=600 && height<=400 && poisize<100 ){
+				window.open("http://www.mapbar.com/search/?utm_source=minimap&referrer=www.sxbdfyy.com#uid=guo126312&k=MAPBQNCACIXRJBCIZIHWX&wf=ls&c="+searchCity,"dditu","");
+			}
+		}
+		markerpoi=0;
+	}
+
+	function showMapbar(){
+		window.open("http://www.mapbar.com/search/?utm_source=minimap&referrer=www.sxbdfyy.com#uid=guo126312&k=MAPBQNCACIXRJBCIZIHWX&wf=ls&c="+searchCity,"_blank");
+	}
+	
+	//关键字查询
+	function searchKeywordPoi(keyword){
+		if(keyword==null || keyword.trim()==""){
+			alert("地图搜索的值不能为空！");
+			return false;
+		}else{
+			window.open('http://www.mapbar.com/search/#k='+encodeURIComponent(keyword)+'&wf=ls&pn=1&rn=10&c='+searchCity,"_blank");
+		}
+	}
+
+	//查询周边
+	function searchNear(name,pt){
+		if(name==null || name.trim()=="" || pt==null || pt.trim()==""){
+			alert("周边查询的值不能为空！");
+			return false;
+		}else{
+			if(name==poiname){
+				window.open('http://www.mapbar.com/search/#cll='+searchStrlatlon+'&cn='+encodeURIComponent(name)+'&c='+searchCity+'&k='+encodeURIComponent(pt)+'&wf=ls',"_blank");
+			}else{
+				window.open('http://www.mapbar.com/search/#cll=&cn='+encodeURIComponent(name)+'&c='+searchCity+'&k='+encodeURIComponent(pt)+'&wf=ls',"_blank");
+			}
+		}
+		
+	}
+	
+	//公交查询
+	function showDestBusSearch(name,searchName){
+		if(name==null || name.trim()=="" || searchName==null || searchName.trim()==""){
+			alert("公交查询的起点终点不能为空！");
+			return false;
+		}else{
+			if(name==poiname){
+				window.open('http://www.mapbar.com/search/#ac=bus&mc='+searchCity+'&on='+encodeURIComponent(searchName)+'&origLatLon=&ds='+encodeURIComponent(name)+'&dn='+searchStrlatlon+'&st=b&qbus=1&wf=bs',"_blank");
+			}else{
+				window.open('http://www.mapbar.com/search/#ac=bus&mc='+searchCity+'&on='+encodeURIComponent(searchName)+'&origLatLon=&ds='+encodeURIComponent(name)+'&dn=&st=b&qbus=1&wf=bs',"_blank");
+			}
+		}
+		
+	}
+	
+	//驾车查询
+	function showDestCarSearch(name,searchName){
+		if(name==null || name.trim()=="" || searchName==null || searchName.trim()==""){
+			alert("驾车查询的起点终点不能为空！");
+			return false;
+		}else{
+			if(name==poiname){
+				window.open('http://www.mapbar.com/search/#ac=nav&oc='+searchCity+'&on='+encodeURIComponent(searchName)+'&origLatLon=&dc='+searchCity+'&ds='+encodeURIComponent(name)+'&dn='+searchStrlatlon+'&st=n&qnav=1&wf=navs',"_blank");
+			}else{
+				window.open('http://www.mapbar.com/search/#ac=nav&oc='+searchCity+'&on='+encodeURIComponent(searchName)+'&origLatLon=&dc='+searchCity+'&ds=&dn='+encodeURIComponent(name)+'&st=n&qnav=1&wf=navs',"_blank");
+			}
+		}
+		
+	}
+	
+	//公交查询首页
+	function showbussearch(){
+		window.open("http://bus.mapbar.com/","busmapbar");
+	}
+
+	function smsselect(val){
+		if(val==1){
+			//sendsms();
+		}else if(val==2){
+			sendmail();
+		}else if(val==4){
+			sendim();
+		}
+	}
+
+	//发送短信
+	/*function sendsms(){
+		var options = {
+			data:[
+					{type:'sms',content:"[mapbar.com地图信息] "+sms},
+					{type:'mail',title:title,content:sms,snapmode:'full'},
+					{type:'im'}
+			     ],
+			openType:"showWin"
+		}
+		sendTools(options);
+	}*/
+
+//发送邮件		
+	function sendmail(){
+		var options = {
+			data:[
+					{type:'mail',title:title,content:sms,snapmode:'full'},
+					{type:'im',title:title,content:sms,snapmode:'no'}
+			     ],
+			openType:"showWin"
+	    }
+	    sendTools(options);
+	}
+
+//发送IM
+	function sendim(){
+		var options = {
+			data:[
+					{type:'im',title:'',content:''},
+					{type:'mail',title:title,content:sms,snapmode:'full'}
+			     ],
+			openType:"showWin"
+	    }
+		sendTools(options);
+	}
+
+	function show_menu(num){
+		for(i=0;i<5;i++){
+			if(document.getElementById('Form'+i)){
+				document.getElementById('Form'+i).style.display='none';
+				document.getElementById('TAG'+i).className='';
+			}
+		}
+		document.getElementById('Form'+num).style.display='block';
+		document.getElementById('TAG'+num).className='onA';
+	}
+	
+	//回车跳到下一个控件
+	function toNext(event,id){
+		var keyCode = event.keyCode?event.keyCode:event.which?event.which:event.charCode;
+		if(keyCode=='13') {
+			document.getElementById(id).focus();
+			return false;
+		}
+	}
+	//回车触发事件
+	function checkSub(event,id){
+		var keyCode = event.keyCode?event.keyCode:event.which?event.which:event.charCode;
+		if(keyCode=='13') {
+			document.getElementById(id).onclick();
+			return false;
+		}
+	}
+	
+	var ist=0;
+	function setTimeSms(){
+		setTimeout(setSmsDivNone, 200);
+	}
+	function setSmsDivNone(){
+		if(ist==0){
+			document.getElementById('smsdiv').style.display='none';
+		}
+	}
+	function setSmsDivShow(val){
+		ist=val;
+	}
+
+	String.prototype.trim = function(){
+		return this.replace(/(^[\s]*)|([\s]*$)/g, "");
+	}
+	//回车后会自动调Form4，限制不要调用
+	function NoSubmit(event){
+		var ev =event.keyCode?event.keyCode:event.which?event.which:event.charCode;
+	    if( ev == 13 ){
+	        return false;
+	    }
+	    return true;
+	}
+
+</script>
+
+
+
+<div style="width: 256px; height: 228px;" id="mainBox" class="smBox">
+	<div style="position:absolute;height:20px;z-index;width:100%;z-index:9;">
+		<ul class="vAllmap" id="searchMaxMap" style="height:24px;width:111px;z-index:0;">
+			<li onmousemove="document.getElementById('smsdiv').style.display='';setSmsDivShow(1);" onmouseout="setSmsDivShow(0);setTimeSms();">
+				<a href="#"><b class="toolC">发送</b></a>
+				<ul id="smsdiv" style="display: none;">
+					<li><a href="javascript:void(0);" onclick="smsselect(2);" onmousemove="setSmsDivShow(1);" onmouseout="setSmsDivShow(0);setTimeSms();">发送邮件</a></li>
+					<li><a href="javascript:void(0);" onclick="smsselect(4);" style="border: 0pt none;" onmousemove="setSmsDivShow(1);" onmouseout="setSmsDivShow(0);setTimeSms();">发送QQ/MSN</a></li>
+				</ul>
+			</li>
+			<li style="margin:0"><a href="javascript:void(0);" onclick="showMapbar();" style="border: 0pt none;"><b class="toolD">大图</b></a></li>
+		</ul>
+    </div>
+	<div style="width: 256px; height: 175px; z-index: 0; overflow: hidden; position: relative; background-color: rgb(235, 234, 232); cursor: default;" id="mapbar" align="left"><div whohide="" id="ImgCopyright" style="width: 41px; height: 20px; overflow: hidden; position: absolute; z-index: 3; top: 149px; cursor: pointer; left: 185px; display: block;"><img src="index_data/mapbar31.png" style="position: absolute; width: 210px; height: 235px; left: -25px; top: -158px;"></div><a style="position: absolute; z-index: 3; font-size: 12px; color: blue; font-family: arial; text-decoration: none; top: 152px; left: 198px; background: none repeat scroll 0% 0% transparent; display: none;" href="http://www.navinfo.com.cn/" target="_blank">©&nbsp;NavInfo</a><div style="position: absolute; top: 0px; left: 0px; z-index: 0; width: 256px; height: 175px; visibility: visible;" id="MapContainerBg"></div><div style="position: absolute; top: 0px; left: 0px; z-index: 2; width: 256px; height: 175px; visibility: visible;" id="MapContainer"><div style="position: absolute; top: 0px; left: 0px; z-index: 24; width: 0px; height: 0px; visibility: hidden;" id="ToolTip"></div><div style="position: absolute; top: 0px; left: 0px; z-index: 2; width: 256px; height: 175px; visibility: visible;" id="LayerMap"><img done="1" src="index_data/0_46.png" origx="-213" origy="136" style="position: absolute; -moz-user-select: none; opacity: 1; top: 136px; left: -213px; width: 300px; height: 300px;" name="a8cal3b2" id="a8cal3b2" height="0" width="0"><img done="1" src="index_data/0_47.png" origx="-213" origy="-164" style="position: absolute; -moz-user-select: none; opacity: 1; top: -164px; left: -213px; width: 300px; height: 300px;" name="a8cal3b3" id="a8cal3b3" height="0" width="0"><img done="1" src="index_data/1_46.png" origx="87" origy="136" style="position: absolute; -moz-user-select: none; opacity: 1; top: 136px; left: 87px; width: 300px; height: 300px;" name="a8cbl3b2" id="a8cbl3b2" height="0" width="0"><img done="1" src="index_data/1_47.png" origx="87" origy="-164" style="position: absolute; -moz-user-select: none; opacity: 1; top: -164px; left: 87px; width: 300px; height: 300px;" name="a8cbl3b3" id="a8cbl3b3" height="0" width="0"></div><div style="position: absolute; top: 0px; left: 0px; z-index: 3; width: 256px; height: 175px; visibility: visible;" id="LayerPoiMap"></div><div _dragmap="true" style="position: absolute; top: 0px; left: 0px; z-index: 4; width: 256px; height: 175px; visibility: visible; -moz-user-select: none;" id="LayerDrawMap"></div><table _disable_mw="true" style="position: absolute; border: 2px solid rgb(14, 52, 127); background-color: rgb(255, 255, 255); table-layout: fixed; overflow: hidden; z-index: 100; left: 36px; top: 10px; width: 215px; height: 160px;" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="" valign="top"><table style="table-layout: fixed; margin-bottom: 5px; margin-top: 4px;" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="overflow: hidden; padding-left: 4px; padding-top: 2px; font-weight: bold; font-size: 14px;" valign="top">山西中医学院中西医结合医...</td><td style="width: 10px; -moz-user-select: none; -moz-user-focus: none;">&nbsp;</td><td style="width: 0px;" valign="top"><div style="position:absolute;width:12px;height:12px;overflow:hidden;-moz-user-select:none;-moz-user-focus:none;cursor:pointer;"><img src="index_data/mapbar31.png" style="position: absolute; left: -42px; top: -51px;"></div></td><td style="width: 18px;" valign="top"><div style="position:absolute;width:12px;height:12px;overflow:hidden;-moz-user-select:none;-moz-user-focus:none;cursor:pointer;"><img src="index_data/mapbar31.png" style="position: absolute; left: -64px; top: -51px;"></div></td></tr></tbody></table></td></tr><tr style="display: none;"><td style="-moz-user-select: none; -moz-user-focus: none;"><ul style="list-style-type: none; margin: 0px; padding: 0px; overflow: hidden; display: none;"><li style="float: left; padding-top: 5px; padding-left: 4px; padding-right: 4px; border-bottom: 1px solid rgb(129, 128, 127);"></li><li style="float: left; border-bottom: 1px solid rgb(129, 128, 127);"></li><li style="padding-top: 5px; padding-left: 4px; padding-right: 4px; border-bottom: 1px solid rgb(129, 128, 127); float: right;"></li></ul></td></tr><tr><td style="" valign="top"><div style="position: relative; padding: 5px; width: 201px; height: 101px; overflow: auto;"><a style="font-size: 12px; cursor: default; color: rgb(0, 0, 0);">地址：太原市府东街13号（府东街门诊）</a><br><a style="font-size: 12px; cursor: default; color: rgb(0, 0, 0);">电话：</a><br><br><div id="tipdiv" style="font-size:12px;color:#000;width:200px;height:50px"><p style="margin:0 0 10px;"><a href="javascript:;" onclick='showTipDiv("tipneardiv","tipdiv");'>查找周边</a></p>交通指南:<a href="javascript:;" onclick='showTipDiv("tipfromDiv","tipdiv");'>从这里出发</a> - <a href="javascript:;" onclick='showTipDiv("tiptoDiv","tipdiv");'>到这里来</a></div><div id="tipneardiv" style="display:none;width:200px;height:50px">查找周边: 如:银行,餐馆 <br><form name="nearbyform"><input id="infoWindowPoitype" name="poitype" onkeypress='if (event.keyCode==13) {inforwindowNearSubmit("http://www.mapbar.com/","guo126312","","太原市","HCAEHDXVFIRWV","山西中医学院中西医结合医院", this.form.elements["infoWindowPoitype"].value);return false;}' type="text"><input name="submit" value="搜索" onclick='inforwindowNearSubmit("http://www.mapbar.com/","guo126312","","太原市","HCAEHDXVFIRWV", "山西中医学院中西医结合医院", this.form.elements["infoWindowPoitype"].value);return false;' type="button"></form><br><a href="javascript:;" onclick='showTipDiv("tipdiv","tipneardiv")'>&lt;&lt;上一步</a></div> <div id="tipfromDiv" style="display:none;width:200px;height:50px">交通查询:从这里出发 - <a href="javascript:;" onclick='showTipDiv("tiptoDiv","tipfromDiv");'>到这里来</a><br><form name="fromform">目的地:<input id="inforwindowMudi" name="searchmudi" onkeypress='if (event.keyCode==13) {inforwindowMudiFunBus("http://www.mapbar.com/","guo126312","","太原市","HCAEHDXVFIRWV","山西中医学院中西医结合医院",this.form.elements["inforwindowMudi"].value);return false;}' type="text"><br><a href="javascript:;" onclick='showTipDiv("tipdiv","tipfromDiv")'>&lt;&lt;上一步 </a><input name="button" value="查公交" onclick='inforwindowMudiFunBus("http://www.mapbar.com/","guo126312","","太原市","HCAEHDXVFIRWV","山西中医学院中西医结合医院",this.form.elements["inforwindowMudi"].value)' type="button"><input name="button" value="查驾车" onclick='inforwindowMudiFunDriver("http://www.mapbar.com/","guo126312","","太原市","HCAEHDXVFIRWV","山西中医学院中西医结合医院",this.form.elements["inforwindowMudi"].value)' type="button"></form></div><div id="tiptoDiv" style="display:none;width:200px;height:50px">交通查询:<a href="javascript:;" onclick='showTipDiv("tipfromDiv","tiptoDiv");'>从这里出发</a> - 到这里来<br><form name="toform">出发地:<input id="inforwindowChuFa" onkeypress='if (event.keyCode==13) {inforwindowChuFaFunBus("http://www.mapbar.com/","guo126312","","太原市","HCAEHDXVFIRWV","山西中医学院中西医结合医院",this.form.elements["inforwindowChuFa"].value);return false;}' type="text"><br><a href="javascript:;" onclick='showTipDiv("tipdiv","tiptoDiv")'>&lt;&lt;上一步 </a><input name="button" value="查公交" onclick='inforwindowChuFaFunBus("http://www.mapbar.com/","guo126312","","太原市","HCAEHDXVFIRWV","山西中医学院中西医结合医院",this.form.elements["inforwindowChuFa"].value)' )'="" type="button"><input name="button" value="查驾车" onclick='inforwindowChuFaFunDriver("http://www.mapbar.com/","guo126312","","太原市","HCAEHDXVFIRWV","山西中医学院中西医结合医院",this.form.elements["inforwindowChuFa"].value)' )'="" type="button"></form></div><div id="tipphotoDiv" style="display:none;width:200px;height:50px">发送到:手机号码  此信息收费1角 <br><input name="searchmudi" type="text"><br><a href="javascript:;" onclick='showTipDiv("tipdiv","tipphotoDiv")'>&lt;&lt;上一步 </a><input name="button" value="取消" type="button"><input name="button" value="发送" type="button"></div></div></td></tr></tbody></table><div style="position: absolute; top: 168px; left: 140.5px; z-index: 101; -moz-user-select: none; -moz-user-focus: none; width: 23px; height: 15px;"><div style="position:absolute;width:23px;height:15px;overflow:hidden;-moz-user-select:none;-moz-user-focus:none;"><img src="index_data/mapbar31.png" style="position: absolute; left: -43px; top: -192px;"></div></div><div _dragmap="true" style="position: absolute; background-color: rgb(129, 128, 127); opacity: 0.5; z-index: 99; left: 39px; top: 13px; width: 215px; height: 160px;" id="_iw_shadow_0"></div><div _dragmap="true" style="position: absolute; background-color: rgb(129, 128, 127); opacity: 0.3; z-index: 98; left: 42px; top: 16px; width: 215px; height: 160px;" id="_iw_shadow_1"></div><div style="position: absolute; background: none repeat scroll 0% 0% white; z-index: 99; width: 217px; height: 162px; left: 35px; top: 9px;"></div></div><div style="position: absolute; top: 151px; left: 4px; z-index: 3; width: 70px; height: 24px; visibility: hidden;" id="LayerScale"><div id="_scaleValue" style="position:absolute;font-family: arial;FONT-SIZE: 12px; color:#000000;FONT-WEIGHT: bold;left:4px;top:0px;">&nbsp;1 公里</div><div style="position:absolute;width:69px;height:11px;overflow:hidden;top:8px;"><img src="index_data/mapbar31.png" style="position: absolute; left: -8px; top: -209px; width: 210px; height: 235px; border: 0px none;" onmousedown="return false;" unselectable="on" galleryimg="no"></div></div><div style="position: absolute; top: -10px; left: -10px; z-index: 6; width: 1px; height: 1px; visibility: hidden; border: 1px solid rgb(255, 255, 255);" id="LayerBorder"><table style="border: 2px solid rgb(14, 52, 127);" border="0" height="100%" width="100%"><tbody><tr><td style="opacity: 0.3; background-color: rgb(255, 255, 255);" valign="middle" align="center"></td></tr></tbody></table></div><div style="position: absolute; top: 0px; left: 0px; z-index: 24; width: auto; height: auto; visibility: hidden;" id="MSnapshotSizeTip1331285862537"><table style="background-color: rgb(14, 52, 127); color: rgb(255, 255, 0); font-size: 14px; font-family: Arial; -moz-user-select: none;" onselectstart="return false;" cellpadding="2" cellspacing="0"><tbody><tr><td id="MSnapshotSizeTip1331285862537_td"></td></tr></tbody></table></div><div style="position: absolute; top: 0px; left: 0px; z-index: 24; width: 0px; height: 0px; visibility: hidden; overflow: hidden;" id="MSnapshotBox1331285862537"><table style="border: 2px solid rgb(14, 52, 127); -moz-user-select: none;" onselectstart="return false;" cellpadding="0" cellspacing="0" height="100%" width="100%"><tbody><tr><td style="background-color: rgb(255, 255, 255); opacity: 0.3;"></td></tr></tbody></table></div><div style="position: absolute; top: 0px; left: 0px; z-index: 24; width: 0px; height: 0px; visibility: hidden; line-height: 23px;" id="MSnapshotBar1331285862537"><font id="MSnapshotBtn_preview_1331285862537" class="snapshotTextBtn">预览</font><font id="MSnapshotBtn_download_1331285862537" class="snapshotTextBtn">保存</font><font id="MSnapshotBtn_cancel_1331285862537" class="snapshotTextBtn" style="border-right: 1px solid #0E347F;">取消</font></div><div style="position: absolute; top: 0px; left: 0px; z-index: 100; width: 35px; height: 27px; visibility: visible; display: none;" id="_mapbar_mw_indicator"><div style="position:absolute;border-width:2px 0px 0px 2px;border-style:solid;border-color:red;width:4px;height:4px;left:0px;top:0px;line-height:1px;"></div><div style="position:absolute;border-width:2px 2px 0px 0px;border-style:solid;border-color:red;width:4px;height:4px;left:28px;top:0px;line-height:1px;"></div><div style="position:absolute;border-width:0px 0px 2px 2px;border-style:solid;border-color:red;width:4px;height:4px;left:0px;top:20px;line-height:1px;"></div><div style="position:absolute;border-width:0px 2px 2px 0px;border-style:solid;border-color:red;width:4px;height:4px;left:28px;top:20px;line-height:1px;"></div></div><div style="position: absolute; top: 0px; left: 0px; z-index: 2; width: 16px; height: 16px; visibility: visible; display: none; overflow: hidden;" id="_mapbar_drag_cross"><img src="index_data/mapbar31.png" style="position: absolute; width: 210px; height: 235px; left: -49px; top: -108px;"></div><div style="position: absolute; z-index: 1000; cursor: pointer; overflow: hidden; opacity: 1; width: 15px; height: 15px; left: 231px; top: 151px;"><img src="index_data/mapbar31.png" style="position: absolute; width: 210px; height: 235px; top: -124px; left: -26px;"></div><div _disable_mw="true" style="position: absolute; z-index: 999; background-color: white; border: 1px solid rgb(166, 165, 161); overflow: hidden; display: none; width: 150px; height: 120px; left: 100px; top: 49px; opacity: 0;"><div style="position: absolute; visibility: visible; z-index: 0; top: 2px; left: 2px; background-color: rgb(235, 234, 232); border: 2px solid rgb(14, 52, 127); overflow: hidden; width: 142px; height: 112px;" id="mapbar-overview-canvas"><div style="left: 64px; top: 51px; width: 12px; height: 8px; visibility: hidden;" id="mapbar-overview-viewport"></div><div style="left: 64px; top: 51px; width: 12px; height: 8px; visibility: hidden;" id="mapbar-overview-viewframe"></div><div style="-moz-user-select: none; cursor: move; left: 64px; top: 51px; width: 12px; height: 8px; visibility: hidden;" id="mapbar-overview-viewpad_ctrl"></div><div style="position: absolute; top: 0px; left: 0px; z-index: 0; width: 142px; height: 112px; visibility: visible;" id="OvwImgs"><img src="index_data/2_7.png" style="position: absolute; top: -142px; left: -99px;" name="__ov_ctrl_670l2f" id="__ov_ctrl_670l2f"></div></div></div><div _disable_mw="true" style="position: absolute; z-index: 998; display: none; width: 166px; height: 136px; left: 92px; top: 41px;"><div style="position:absolute;left:5px;top:5px;width:7px;height:7px;overflow:hidden;"><img src="index_data/mapbar31.png" style="position: absolute; left: -28px; top: -103px;"></div><div style="position:absolute;left:12px;top:5px;width:144px;height:3px;overflow:hidden;"><img src="index_data/mapbar31.png" style="position: absolute; left: 0px; top: -226px;"></div><div style="position:absolute;left:156px;top:5px;width:7px;height:7px;overflow:hidden;"><img src="index_data/mapbar31.png" style="position: absolute; left: -38px; top: -103px;"></div><div style="position:absolute;left:160px;top:12px;width:7px;height:114px;overflow:hidden;"><img src="index_data/mapbar31.png" style="position: absolute; left: -81px; top: 0px;"></div><div style="position:absolute;left:156px;top:126px;width:7px;height:7px;overflow:hidden;"><img src="index_data/mapbar31.png" style="position: absolute; left: -38px; top: -113px;"></div><div style="position:absolute;left:12px;top:130px;width:144px;height:7px;overflow:hidden;"><img src="index_data/mapbar31.png" style="position: absolute; left: 0px; top: -229px;"></div><div style="position:absolute;left:5px;top:126px;width:7px;height:7px;overflow:hidden;"><img src="index_data/mapbar31.png" style="position: absolute; left: -28px; top: -113px;"></div><div style="position:absolute;left:5px;top:12px;width:3px;height:114px;overflow:hidden;"><img src="index_data/mapbar31.png" style="position: absolute; left: -78px; top: 0px;"></div></div><div style="position: absolute; top: 10px; left: 10px; z-index: 3; width: 0px; height: 0px; visibility: visible;" id="LayerControl"><div id="ctrlPan" style="position: absolute; left: 0px; top: 0px; width: 50px; height: 0px; overflow: hidden; display: none;" onmousedown="return false;"><img id="ctrlPan_img" src="index_data/mapbar31.png" style="position: absolute; left: -25px; top: 0px; width: 210px; height: 235px; border: 0px none; cursor: pointer;" onmousedown="return false;" unselectable="on" usemap="#_pan_map" galleryimg="no"></div><div id="ctrlZoomOut" style="position: absolute; left: 0px; top: -5px; width: 24px; height: 23px; overflow: hidden;" onmousedown="return false;"><img id="ctrlZoomOut_img" src="index_data/mapbar31.png" style="position: absolute; left: 0px; top: 0px; width: 210px; height: 235px; border: 0px none; cursor: pointer;" onmousedown="return false;" unselectable="on" usemap="#_zo_map" galleryimg="no"></div><div id="ctrlRuler" style="position: absolute; left: 0px; top: 18px; width: 24px; height: 0px; overflow: hidden; display: none;" onmousedown="return false;"><img id="ctrlRuler_img" src="index_data/mapbar31.png" style="position: absolute; left: 0px; top: -24px; width: 210px; height: 235px; border: 0px none; cursor: pointer;" onmousedown="return false;" unselectable="on" galleryimg="no"></div><div id="ctrlZoomIn" style="position: absolute; left: 0px; top: 18px; width: 24px; height: 26px; overflow: hidden;" onmousedown="return false;"><img id="ctrlZoomIn_img" src="index_data/mapbar31.png" style="position: absolute; left: 0px; top: -183px; width: 210px; height: 235px; border: 0px none; cursor: pointer;" onmousedown="return false;" unselectable="on" usemap="#_zi_map" galleryimg="no"></div><div id="ctrlSlider" style="position: absolute; left: 2px; top: 54px; width: 17px; height: 7px; overflow: hidden; display: none; cursor: default;" onmousedown="return false;"><img id="ctrlSliderImg" src="index_data/mapbar31.png" style="position: absolute; left: -25px; top: -51px; width: 210px; height: 235px; border: 0px none; cursor: pointer;" onmousedown="return false;" unselectable="on" galleryimg="no"></div><map name="_pan_map" id="_pan_map"><area id="_fb_n_ctrl_imap" shape="poly" title="向北平移" coords="35,6,39,3,42,2,47,1,51,1,56,2,61,4,63,6,63,7,55,15,50,13,48,13,43,15,35,7" onfocus="this.blur()" onclick="PerformControl(event, this,2);"><area id="_fb_s_ctrl_imap" shape="poly" title="向南平移" coords="64,38,55,29,50,31,48,31,43,29,34,38,34,39,37,42,42,44,47,45,51,45,56,44,61,42,64,39" onfocus="this.blur()" onclick="PerformControl(event, this,4);"><area id="_fb_w_ctrl_imap" shape="poly" title="向西平移" coords="34,8,42,16,40,21,40,23,42,28,33,37,32,37,30,35,28,30,27,25,27,21,28,16,30,11,33,8" onfocus="this.blur()" onclick="PerformControl(event, this,1);"><area id="_fb_e_ctrl_imap" shape="poly" title="向东平移" coords="64,8,56,16,58,21,58,23,56,28,65,37,66,37,68,35,70,30,71,25,71,21,70,16,68,11,65,8" onfocus="this.blur()" onclick="PerformControl(event, this,3);"><area id="_fb_m_ctrl_imap" shape="circle" title="测量距离" coords="48,22,8" onclick="PerformControl(event, this,7);" onfocus="this.blur()"></map><map name="_zo_map" id="_zo_map"><area id="_fb_zo_ctrl_imap" shape="poly" title="放大" coords="8,0,5,1,1,5,0,8,0,21,20,21,20,8,19,5,15,1,12,0" onfocus="this.blur()" onclick="PerformControl(event, this,5);"></map><map name="_zi_map" id="_zi_map"><area id="_fb_zi_ctrl_imap" shape="poly" title="缩小" coords="0,183,0,196,1,199,5,203,8,204,12,204,15,203,19,199,20,196,20,183" onfocus="this.blur()" onclick="PerformControl(event, this,6);"></map><div id="_fb_ctrl_leveltip" style="position:absolute;left:0px;top:0px;width:52px;height:121px;display:none;"><div id="_fb_ctrl_lt_s" style="position:absolute;left:0px;top:0px;width:52px;height:18px;overflow:hidden;" onmousedown="return false;"><div id="_fb_ctrl_lt_s_text" style="position:absolute;padding-left:16px;padding-top:1px;color:white;z-index:1;width:35px;text-align:center;font-size:12px;cursor:pointer;background-image:url('http://img.mapbar.com/maplite/images/mask.gif');" _ml="13">街道</div><img src="index_data/mapbar31.png" style="position: absolute; left: -26px; top: -65px; width: 210px; height: 235px; border: 0px none; cursor: pointer;" onmousedown="return false;" unselectable="on" galleryimg="no"></div><div id="_fb_ctrl_lt_c" style="position:absolute;left:0px;top:40px;width:52px;height:18px;overflow:hidden;" onmousedown="return false;"><div id="_fb_ctrl_lt_c_text" style="position:absolute;padding-left:16px;padding-top:1px;color:white;z-index:1;width:35px;text-align:center;font-size:12px;cursor:pointer;background-image:url('http://img.mapbar.com/maplite/images/mask.gif');" _ml="8">城市</div><img src="index_data/mapbar31.png" style="position: absolute; left: -26px; top: -65px; width: 210px; height: 235px; border: 0px none; cursor: pointer;" onmousedown="return false;" unselectable="on" galleryimg="no"></div><div id="_fb_ctrl_lt_p" style="position:absolute;left:0px;top:72px;width:52px;height:18px;overflow:hidden;" onmousedown="return false;"><div id="_fb_ctrl_lt_p_text" style="position:absolute;padding-left:16px;padding-top:1px;color:white;z-index:1;width:35px;text-align:center;font-size:12px;cursor:pointer;background-image:url('http://img.mapbar.com/maplite/images/mask.gif');" _ml="4">省</div><img src="index_data/mapbar31.png" style="position: absolute; left: -26px; top: -65px; width: 210px; height: 235px; border: 0px none; cursor: pointer;" onmousedown="return false;" unselectable="on" galleryimg="no"></div><div id="_fb_ctrl_lt_cr" style="position:absolute;left:0px;top:104px;width:52px;height:18px;overflow:hidden;" onmousedown="return false;"><div id="_fb_ctrl_lt_cr_text" style="position:absolute;padding-left:16px;padding-top:1px;color:white;z-index:1;width:35px;text-align:center;font-size:12px;cursor:pointer;background-image:url('http://img.mapbar.com/maplite/images/mask.gif');" _ml="0">国家</div><img src="index_data/mapbar31.png" style="position: absolute; left: -26px; top: -65px; width: 210px; height: 235px; border: 0px none; cursor: pointer;" onmousedown="return false;" unselectable="on" galleryimg="no"></div></div></div></div>
+ 	<div id="searchDiv" class="boBox" style="">   
+        <ul id="rightTXT" class="RTxt" style="display:none;">
+			<li><a href="http://union.mapbar.com/onlineTagging.jsp" target="_balnk">在地图上标位置</a></li>
+			<li><a href="http://jipiao.mapbar.com/" target="_balnk">低至1折的特价机票</a></li>
+			<li><a href="http://hotel.mapbar.com/" target="_balnk">订酒店返现金</a></li>
+			<li><a href="http://moto.mapbar.com/map.jsp#ac=mm&amp;mapId=542240" target="_balnk">火车飞机售票点</a></li>
+        </ul>
+        <div id="leftSearch" class="leftTag">
+			<table class="TAGUL" cellpadding="0" cellspacing="0" width="100%">
+			  <tbody><tr>
+				<td class="onA" id="TAG1" onclick="show_menu(1)">公交查询</td>
+				<td class="" id="TAG2" onclick="show_menu(2)">驾车查询</td>
+				<td class="" id="TAG3" onclick="show_menu(3)">周边查询</td>
+				<td class="" id="TAG4" onclick="show_menu(4)" style="background-image: none;">地图搜索</td>
+			  </tr>
+			</tbody></table>
+            <form action="" method="get" id="Form1" style="display: block;">
+                <table width="100%">
+                  <tbody><tr>
+                    <td style="width: 50%;"><input id="busOrigName" name="busOrigName" onkeypress="checkSub(event,'busbutton');" style="width: 100%;" type="text"></td>
+                    <td style="text-indent: 4px;">到</td>
+                    <td style="width: 50%;"><input value="山西中医学院中西医结合医院" id="busDestName" name="busDestName" onkeypress="checkSub(event,'busbutton');" style="width: 100%;" type="text"></td>
+                    <td><input id="busbutton" name="busbutton" value="搜索" onclick="showDestBusSearch(document.getElementById('busDestName').value,document.getElementById('busOrigName').value);" class="inpBut" type="button"></td>
+                  </tr>
+                </tbody></table>
+            </form>
+            <form style="display: none;" action="" method="get" id="Form2">
+                <table width="100%">
+                  <tbody><tr>
+                    <td style="width: 50%;"><input id="carOrigName" name="carOrigName" onkeypress="checkSub(event,'drivebutton');" style="width: 100%;" type="text"></td>
+                    <td style="text-indent: 4px;">到</td>
+                    <td style="width: 50%;"><input value="山西中医学院中西医结合医院" id="carDestName" name="carDestName" onkeypress="checkSub(event,'drivebutton');" style="width: 100%;" type="text"></td>
+                    <td><input id="drivebutton" name="drivebutton" value="搜索" onclick="showDestCarSearch(document.getElementById('carDestName').value,document.getElementById('carOrigName').value);" class="inpBut" type="button"></td>
+                  </tr>
+                </tbody></table>
+            </form>
+            <form style="display: none;" action="" method="get" id="Form3">
+                <table width="100%">
+                  <tbody><tr>
+                    <td style="width: 50%;"><input value="山西中医学院中西医结合医院" id="nearKeyword" name="nearKeyword" onkeypress="checkSub(event,'nearButton');" style="width: 100%;" type="text"></td>
+                    <td style="white-space: pre; text-indent: 4px;">附近的</td>
+                    <td style="width: 50%;"><input id="pt" name="pt" onkeypress="checkSub(event,'nearButton');" style="width: 100%;" type="text"></td>
+                    <td><input id="nearButton" name="nearButton" value="搜索" onclick="searchNear(document.getElementById('nearKeyword').value,document.getElementById('pt').value);" class="inpBut" type="button"></td>
+                  </tr>
+                </tbody></table>
+            </form>
+            <form style="display: none;" action="" method="get" id="Form4" onkeypress="javascript:return NoSubmit(event);">
+                <table width="100%">
+                  <tbody><tr>
+                    <td style="width: 100%;"><input id="keyword" name="keyword" onkeypress="checkSub(event,'kb');" style="width: 100%;" type="text"></td>
+                    <td><input id="kb" name="kb" value="搜索" onclick="searchKeywordPoi(document.getElementById('keyword').value);" class="inpBut" type="button"></td>
+                  </tr>
+                </tbody></table>
+            </form>
+        </div>
+
+   </div> 
+</div>
+
+
+</body></html>
